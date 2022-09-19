@@ -2,7 +2,10 @@
 console.log("working");
 
 // Create the map object with a center and zoom level.
-let map = L.map('mapid').setView([40.7, -94.5], 4);
+//let map = L.map('mapid').setView([40.7, -94.5], 4);
+
+// change above code to zoom in on just LA for 13.4.1
+let map = L.map('mapid').setView([34.0522, -118.2437], 14);
 // In the code block above:
 
 // 1.) We're assigning the variable map to the object L.map(), 
@@ -24,11 +27,33 @@ let map = L.map('mapid').setView([40.7, -94.5], 4);
 // This method is useful when we need to add multiple tile layers, or a 
 // background image of our map(s), which we will do later in this module.
 
+// 13.4.1 Adding a single marker to a map
+// Add a single marker to the map for Los Angeles, CA 
+let marker = L.marker([34.0522, -118.2437]).addTo(map);
+
+// Add a circle to the map over LA
+var circle = L.circle([34.0522, -118.2437], {
+    color: 'black',
+    fillColor: 'yellow',
+    fillOpacity: 0.2,
+    radius: 300
+}).addTo(map);
+
+// add circle marker versus regular marker as above
+// for circleMarker function, radius is measured in pixels, default of 10
+// fill color of light yellow is #ffffa1 
+var circle = L.circleMarker([34.0522, -118.2437], {
+    color: 'black',
+    fillColor: 'red',
+    fillOpacity: 0.2,
+    radius: 300
+}).addTo(map);
+
 // We create the tile layer that will be the background of our map.
-let streets = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+let streets = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/dark-v10/tiles/{z}/{x}/{y}?access_token={accessToken}', {
     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
     maxZoom: 18,
-    // id: 'mapbox/streets-v11',
+    //id: 'mapbox/dark-v10',
     // tileSize: 512,
     // zoomOffset: -1,
     accessToken: API_KEY
