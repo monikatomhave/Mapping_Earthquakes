@@ -1,11 +1,34 @@
 // Add console.log to check to see if our code is working.
 console.log("working");
 
+// Get the data from cities.js
+let cityData = cities;
+
 // Create the map object with a center and zoom level.
-//let map = L.map('mapid').setView([40.7, -94.5], 4);
+let map = L.map('mapid').setView([40.7, -94.5], 4);
+
+// Loop through the cities array and create one marker for each city.
+// also grabs the city, state and population for a pop up when marker is 
+// clicked and formats population with commas with the toLocaleString() 
+// next we change the marker for each city to a circle that has a radius
+// equivalent to the city's population.  City population makes radii too large,
+// have to reduce size, so divided it by 100,000.
+cityData.forEach(function(city) {
+    console.log(city)
+    L.circleMarker(city.location, {
+        //radius: city.population/100000,
+        color: "orange",
+        fillColor: "orange",
+        weight: 4,
+        fillOpacity: 0.2,
+        radius: (city.population - 200000)/100000
+    })
+    .bindPopup("<h2>" + city.city + ", " + city.state + "</h2> <hr> <h3>Population " + city.population.toLocaleString() + "</h3>")
+    .addTo(map);
+   });
 
 // change above code to zoom in on just LA for 13.4.1
-let map = L.map('mapid').setView([34.0522, -118.2437], 14);
+//let map = L.map('mapid').setView([34.0522, -118.2437], 14);
 // In the code block above:
 
 // 1.) We're assigning the variable map to the object L.map(), 
@@ -29,25 +52,25 @@ let map = L.map('mapid').setView([34.0522, -118.2437], 14);
 
 // 13.4.1 Adding a single marker to a map
 // Add a single marker to the map for Los Angeles, CA 
-let marker = L.marker([34.0522, -118.2437]).addTo(map);
+//let marker = L.marker([34.0522, -118.2437]).addTo(map);
 
 // Add a circle to the map over LA
-var circle = L.circle([34.0522, -118.2437], {
-    color: 'black',
-    fillColor: 'yellow',
-    fillOpacity: 0.2,
-    radius: 300
-}).addTo(map);
+//var circle = L.circle([34.0522, -118.2437], {
+//    color: 'black',
+//    fillColor: 'yellow',
+//    fillOpacity: 0.2,
+//    radius: 300
+//}).addTo(map);
 
 // add circle marker versus regular marker as above
 // for circleMarker function, radius is measured in pixels, default of 10
 // fill color of light yellow is #ffffa1 
-var circle = L.circleMarker([34.0522, -118.2437], {
-    color: 'black',
-    fillColor: 'red',
-    fillOpacity: 0.2,
-    radius: 300
-}).addTo(map);
+//var circle = L.circleMarker([34.0522, -118.2437], {
+//    color: 'black',
+//    fillColor: 'red',
+//    fillOpacity: 0.2,
+//    radius: 300
+//}).addTo(map);
 
 // We create the tile layer that will be the background of our map.
 let streets = L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/dark-v10/tiles/{z}/{x}/{y}?access_token={accessToken}', {
